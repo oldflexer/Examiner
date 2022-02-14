@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCreator", "ExamCreator\ExamCreator.csproj", "{E6BE809D-0989-49F7-8132-B4578CBB1F6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examiner", "Examiner\Examiner.csproj", "{FFE2F483-90B2-4530-82DB-F055E84BD55E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6BE809D-0989-49F7-8132-B4578CBB1F6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6BE809D-0989-49F7-8132-B4578CBB1F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6BE809D-0989-49F7-8132-B4578CBB1F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6BE809D-0989-49F7-8132-B4578CBB1F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE2F483-90B2-4530-82DB-F055E84BD55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE2F483-90B2-4530-82DB-F055E84BD55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE2F483-90B2-4530-82DB-F055E84BD55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE2F483-90B2-4530-82DB-F055E84BD55E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

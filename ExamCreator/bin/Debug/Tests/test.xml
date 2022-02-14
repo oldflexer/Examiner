@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ArrayOfPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Page>
+    <Question>q</Question>
+    <Answer1>1</Answer1>
+    <Answer2>2</Answer2>
+    <Answer3>3</Answer3>
+    <Answer4>4</Answer4>
+    <Correct>
+      <int>3</int>
+      <int>2</int>
+    </Correct>
+  </Page>
+  <Page>
+    <Question>w</Question>
+    <Answer1>1</Answer1>
+    <Answer2>2</Answer2>
+    <Answer3>3</Answer3>
+    <Answer4>4</Answer4>
+    <Correct />
+  </Page>
+  <Page>
+    <Question>e</Question>
+    <Answer1>1</Answer1>
+    <Answer2>2</Answer2>
+    <Answer3>3</Answer3>
+    <Answer4>4</Answer4>
+    <Correct>
+      <int>3</int>
+      <int>1</int>
+    </Correct>
+  </Page>
+</ArrayOfPage>

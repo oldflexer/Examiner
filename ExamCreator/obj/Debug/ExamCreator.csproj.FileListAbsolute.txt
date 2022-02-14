@@ -1,0 +1,14 @@
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\bin\Debug\ExamCreator.exe.config
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\bin\Debug\ExamCreator.exe
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\bin\Debug\ExamCreator.pdb
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\bin\Debug\MaterialSkin.dll
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.csproj.AssemblyReference.cache
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.csproj.SuggestedBindingRedirects.cache
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.Properties.Resources.resources
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.csproj.GenerateResource.cache
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.csproj.CoreCompileInputs.cache
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.csproj.CopyComplete
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.exe
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.pdb
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.Forms.MainForm.resources
+C:\Users\oldflexer\RiderProjects\ExamCreator\ExamCreator\obj\Debug\ExamCreator.Forms.Editor.resources

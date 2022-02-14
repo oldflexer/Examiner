@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ArrayOfPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Page>
+    <Question>Как дела?</Question>
+    <Answer1>Отлично</Answer1>
+    <Answer2>Хорошо</Answer2>
+    <Answer3>Плохо</Answer3>
+    <Answer4>Ужасно</Answer4>
+    <Correct>
+      <int>4</int>
+      <int>3</int>
+      <int>2</int>
+      <int>1</int>
+    </Correct>
+  </Page>
+  <Page>
+    <Question>Сколько лет Путину?</Question>
+    <Answer1>1000</Answer1>
+    <Answer2>2000</Answer2>
+    <Answer3>3000</Answer3>
+    <Answer4>4000</Answer4>
+    <Correct />
+  </Page>
+  <Page>
+    <Question>Сколько лет Каменску-Уральскому?</Question>
+    <Answer1>320</Answer1>
+    <Answer2>319</Answer2>
+    <Answer3>321</Answer3>
+    <Answer4>330</Answer4>
+    <Correct>
+      <int>3</int>
+    </Correct>
+  </Page>
+</ArrayOfPage>

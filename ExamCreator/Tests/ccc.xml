@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ArrayOfPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Page>
+    <Question>Матвей педик?</Question>
+    <Answer1>Да</Answer1>
+    <Answer2>Да</Answer2>
+    <Answer3>Да</Answer3>
+    <Answer4>Нет</Answer4>
+    <Correct>
+      <int>3</int>
+      <int>2</int>
+      <int>1</int>
+    </Correct>
+  </Page>
+</ArrayOfPage>
