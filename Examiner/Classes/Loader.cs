@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using MaterialSkin.Controls;
 
 namespace Examiner.Classes
@@ -23,7 +24,7 @@ namespace Examiner.Classes
             // Определяем страницу теста под текущим индексом из списка страниц
             var page = pages[currentIndex];
 
-            // Записываем данные со страницы в надписи экзаменатора
+            // Записываем данные со страницы в надписи экзаменатора и скрываем варианты ответа без вопроса
             for (var i = 0; i < labels.Count; i++)
             {
                 switch (i)
@@ -31,18 +32,43 @@ namespace Examiner.Classes
                     case 0:
                         labels[i].Text = page.Question;
                         break;
+                    
                     case 1:
-                        labels[i].Text = page.Answer1;
+                        labels[i].Visible = false;
+                        if (page.Answer1 != "")
+                        {
+                            labels[i].Visible = true;
+                            labels[i].Text = page.Answer1;
+                        }
                         break;
+                    
                     case 2:
-                        labels[i].Text = page.Answer2;
+                        labels[i].Visible = false;
+                        if (page.Answer2 != "")
+                        {
+                            labels[i].Visible = true;
+                            labels[i].Text = page.Answer2;
+                        }
                         break;
+                    
                     case 3:
-                        labels[i].Text = page.Answer3;
+                        labels[i].Visible = false;
+                        if (page.Answer3 != "")
+                        {
+                            labels[i].Visible = true;
+                            labels[i].Text = page.Answer3;
+                        }
                         break;
+                    
                     case 4:
-                        labels[i].Text = page.Answer4;
+                        labels[i].Visible = false;
+                        if (page.Answer4 != "")
+                        {
+                            labels[i].Visible = true;
+                            labels[i].Text = page.Answer4;
+                        }
                         break;
+                    
                     case 5:
                         // Если количество правильных ответов больше одного, то выводим соответствующую надпись, иначе для одного ответа
                         labels[i].Text = page.Correct.Count > 1 ? "Выберите несколько верных вариантов ответа" : "Выберите верный вариант ответа";
@@ -53,15 +79,24 @@ namespace Examiner.Classes
             // Отмечаем чекбоксы со страницы ответов пользователя в чекбоксы экзаменатора
             foreach (var cb in checkBoxes)
             {
-                // Сначала отчистим все
+                // Сначала отчистим чекбокс
                 cb.Checked = false;
-                
+
                 // Если пользователь еще не давал ответов на этот вопрос, то пропускаем итерацию
-                if (answers?[currentIndex] == null) continue;
-                // Выводим ответы пользователя
-                foreach (var answer in answers[currentIndex].Where(answer => Convert.ToInt32(cb.Tag) == answer))
+                if (answers?[currentIndex] != null)
                 {
-                    cb.Checked = true;
+                    // Отображаем чекбокс, если отображается вопрос
+                    cb.Visible = labels[Convert.ToInt32(cb.Tag)].Visible;
+                    // Выводим ответы пользователя и включаем отображение
+                    foreach (var answer in answers[currentIndex].Where(answer => Convert.ToInt32(cb.Tag) == answer))
+                    {
+                        cb.Checked = true;
+                    }
+                }
+                else
+                {
+                    // Отображаем чекбокс, если отображается вопрос
+                    cb.Visible = labels[Convert.ToInt32(cb.Tag)].Visible;
                 }
             }
         }
