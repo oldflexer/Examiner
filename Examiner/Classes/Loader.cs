@@ -35,36 +35,44 @@ namespace Examiner.Classes
                     
                     case 1:
                         labels[i].Visible = false;
+                        checkBoxes[i - 1].Visible = false;
                         if (page.Answer1 != "")
                         {
                             labels[i].Visible = true;
+                            checkBoxes[i - 1].Visible = true;
                             labels[i].Text = page.Answer1;
                         }
                         break;
                     
                     case 2:
                         labels[i].Visible = false;
+                        checkBoxes[i - 1].Visible = false;
                         if (page.Answer2 != "")
                         {
                             labels[i].Visible = true;
+                            checkBoxes[i - 1].Visible = true;
                             labels[i].Text = page.Answer2;
                         }
                         break;
                     
                     case 3:
                         labels[i].Visible = false;
+                        checkBoxes[i - 1].Visible = false;
                         if (page.Answer3 != "")
                         {
                             labels[i].Visible = true;
+                            checkBoxes[i - 1].Visible = true;
                             labels[i].Text = page.Answer3;
                         }
                         break;
                     
                     case 4:
                         labels[i].Visible = false;
+                        checkBoxes[i - 1].Visible = false;
                         if (page.Answer4 != "")
                         {
                             labels[i].Visible = true;
+                            checkBoxes[i - 1].Visible = true;
                             labels[i].Text = page.Answer4;
                         }
                         break;
@@ -83,20 +91,11 @@ namespace Examiner.Classes
                 cb.Checked = false;
 
                 // Если пользователь еще не давал ответов на этот вопрос, то пропускаем итерацию
-                if (answers?[currentIndex] != null)
+                if (answers?[currentIndex] == null) continue;
+                // Выводим ответы пользователя и включаем отображение
+                foreach (var answer in answers[currentIndex].Where(answer => Convert.ToInt32(cb.Tag) == answer))
                 {
-                    // Отображаем чекбокс, если отображается вопрос
-                    cb.Visible = labels[Convert.ToInt32(cb.Tag)].Visible;
-                    // Выводим ответы пользователя и включаем отображение
-                    foreach (var answer in answers[currentIndex].Where(answer => Convert.ToInt32(cb.Tag) == answer))
-                    {
-                        cb.Checked = true;
-                    }
-                }
-                else
-                {
-                    // Отображаем чекбокс, если отображается вопрос
-                    cb.Visible = labels[Convert.ToInt32(cb.Tag)].Visible;
+                    cb.Checked = true;
                 }
             }
         }

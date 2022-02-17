@@ -248,6 +248,7 @@ namespace Examiner.Forms
             this.lAnswer4.Size = new System.Drawing.Size(405, 100);
             this.lAnswer4.TabIndex = 13;
             this.lAnswer4.Text = "Ответ4";
+            this.lAnswer4.Tag = "8";
             // 
             // lAnswer2
             // 
@@ -260,6 +261,7 @@ namespace Examiner.Forms
             this.lAnswer2.Size = new System.Drawing.Size(405, 100);
             this.lAnswer2.TabIndex = 12;
             this.lAnswer2.Text = "Ответ2";
+            this.lAnswer2.Tag = "6";
             // 
             // lAnswer3
             // 
@@ -272,6 +274,7 @@ namespace Examiner.Forms
             this.lAnswer3.Size = new System.Drawing.Size(405, 100);
             this.lAnswer3.TabIndex = 11;
             this.lAnswer3.Text = "Ответ3";
+            this.lAnswer3.Tag = "7";
             // 
             // lAnswer1
             // 
@@ -284,6 +287,7 @@ namespace Examiner.Forms
             this.lAnswer1.Size = new System.Drawing.Size(405, 100);
             this.lAnswer1.TabIndex = 10;
             this.lAnswer1.Text = "Ответ1";
+            this.lAnswer1.Tag = "5";
             // 
             // cbFour
             // 
