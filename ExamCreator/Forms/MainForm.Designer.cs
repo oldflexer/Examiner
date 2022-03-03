@@ -122,9 +122,9 @@ namespace ExamCreator.Forms
             // 
             this.picEmblem.Image = global::ExamCreator.Properties.Resources.school20;
             this.picEmblem.ImageLocation = "";
-            this.picEmblem.Location = new System.Drawing.Point(358, 155);
+            this.picEmblem.Location = new System.Drawing.Point(355, 155);
             this.picEmblem.Name = "picEmblem";
-            this.picEmblem.Size = new System.Drawing.Size(336, 436);
+            this.picEmblem.Size = new System.Drawing.Size(340, 375);
             this.picEmblem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picEmblem.TabIndex = 4;
             this.picEmblem.TabStop = false;
@@ -146,7 +146,7 @@ namespace ExamCreator.Forms
             this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(6, 78, 6, 6);
+            this.Padding = new System.Windows.Forms.Padding(3, 88, 6, 6);
             this.Sizable = false;
             this.Text = "ExamCreator";
             ((System.ComponentModel.ISupportInitialize)(this.picEmblem)).EndInit();

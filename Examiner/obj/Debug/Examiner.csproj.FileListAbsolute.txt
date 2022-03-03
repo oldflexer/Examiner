@@ -12,3 +12,6 @@ C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\obj\Debug\Examiner.exe
 C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\obj\Debug\Examiner.pdb
 C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\obj\Debug\Examiner.Forms.MainForm.resources
 C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\obj\Debug\Examiner.Forms.Tester.resources
+C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\bin\Debug\Microsoft.Office.Interop.Excel.dll
+C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\bin\Debug\Microsoft.Office.Interop.Word.dll
+C:\Users\oldflexer\RiderProjects\ExamCreator\Examiner\bin\Debug\stdole.dll

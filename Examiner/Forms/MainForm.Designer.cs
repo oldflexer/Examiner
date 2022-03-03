@@ -99,7 +99,7 @@
             this.picEmblem.ImageLocation = "";
             this.picEmblem.Location = new System.Drawing.Point(358, 155);
             this.picEmblem.Name = "picEmblem";
-            this.picEmblem.Size = new System.Drawing.Size(336, 436);
+            this.picEmblem.Size = new System.Drawing.Size(340, 375);
             this.picEmblem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picEmblem.TabIndex = 5;
             this.picEmblem.TabStop = false;

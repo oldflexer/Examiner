@@ -108,6 +108,9 @@ namespace Examiner.Classes
             
             // Загружаем первую страницу в редактор
             var load = new Loader(pages, 0, ref labels, ref checkBoxes);
+            
+            // Удаляем временный файл
+            File.Delete(filename);
         }
     }
 }
