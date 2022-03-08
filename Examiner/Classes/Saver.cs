@@ -122,9 +122,10 @@ namespace Examiner.Classes
             }
             // Определяем максимально возможное кол-во полных верных ответов на вопросы
             _maxScoreQuestions = pages.Count;
-            // Кол-во полных верных ответов на вопросы пользователем, переводим в проценты
+            // Кол-во полных верных ответов на вопросы пользователем
             _scoreQuestions = _tempScore;
-            _tempScore = Math.Round(Convert.ToDouble(_scoreQuestions) / Convert.ToDouble(_maxScoreQuestions) * 100, 2);
+            // Переводим в проценты набранные баллы из максимальных
+            _tempScore = Math.Round(Convert.ToDouble(_score) / Convert.ToDouble(_maxScore) * 100, 2);
 
             // Определяем оценку за тест
             if (_tempScore < 45)
@@ -144,24 +145,30 @@ namespace Examiner.Classes
                 _mark = 5;
             }
 
+            // Запуск приложения Excel
+            // Visible - отображать работу, DisplayAlerts - отображать всплывающие окна
             _excelApp = new Excel.ApplicationClass();
             _excelApp.Visible = false;
             _excelApp.SheetsInNewWorkbook = 1;
-            _excelApp.Workbooks.Add(Type.Missing);
+            _excelApp.Workbooks.Add(Type.Missing); // Создаем рабочую книгу
             _excelApp.DisplayAlerts = false;
             
+            // Переходим в рабочую книгу
             _excelAppWorkbooks = _excelApp.Workbooks;
             _excelAppWorkbook = _excelAppWorkbooks[1];
             _excelAppWorkbook.Activate();
             
+            // Переходим в рабочий лист
             _excelSheets = _excelAppWorkbook.Worksheets;
             _excelWorksheet = (Excel.Worksheet)_excelSheets.Item[1];
             
+            // Устанавливаем стандартные данные в ячейки
             _excelCells = _excelWorksheet.Range["A1", Type.Missing];
             _excelCells.Value2 = "Вопрос:";
             _excelCells = _excelWorksheet.Range["B1", Type.Missing];
             _excelCells.Value2 = "Ответ:";
 
+            // Заполняем лист данными вопросов и данными ответов
             var row = 2;
             var table = 1;
             _excelCells = (Excel.Range)_excelWorksheet.Cells[row, table];
@@ -194,7 +201,12 @@ namespace Examiner.Classes
                 table -= 1;
                 _excelCells = (Excel.Range)_excelWorksheet.Cells[row, table];
             }
+            
+            // Устанавливаем данные о оценке пользователя
+            _excelCells = _excelWorksheet.Range["D2", Type.Missing];
+            _excelCells.Value2 = $"Оценка: {_mark}";
 
+            // Сохраняем рабочую книгу в папку "Мои документы\Examiner"
             _excelAppWorkbooks = _excelApp.Workbooks;
             _excelAppWorkbook = _excelAppWorkbooks[1];
             path += @"\Examiner";
@@ -204,7 +216,6 @@ namespace Examiner.Classes
             }
             _excelAppWorkbook.SaveAs(path + @"\Results.xlsx");
             _excelApp.Quit();
-            
 
             // Выводим сообщение о кол-ве набранных баллов пользователю
             MessageBox.Show($"Кол-во набранных баллов: {_score}/{_maxScore}\n" +
