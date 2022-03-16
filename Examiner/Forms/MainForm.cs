@@ -24,12 +24,12 @@ namespace Examiner.Forms
             // Настройка цветовой темы для окон
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.Red500,
-                Primary.Grey800,
-                Primary.Red900,
-                Accent.Red700,
+                Primary.Blue500,
+                Primary.Blue800,
+                Primary.Blue900,
+                Accent.Blue700,
                 TextShade.WHITE);
         }
 

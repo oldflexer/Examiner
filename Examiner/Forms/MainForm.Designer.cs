@@ -95,7 +95,7 @@
             // 
             // picEmblem
             // 
-            this.picEmblem.Image = global::Examiner.Properties.Resources.school20;
+            this.picEmblem.Image = global::Examiner.Properties.Resources.ugk;
             this.picEmblem.ImageLocation = "";
             this.picEmblem.Location = new System.Drawing.Point(358, 155);
             this.picEmblem.Name = "picEmblem";

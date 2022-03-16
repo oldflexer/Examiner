@@ -103,7 +103,9 @@
         <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="Resources\polzunova.png" />
       <Content Include="Resources\school20.png" />
+      <Content Include="Resources\ugk.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

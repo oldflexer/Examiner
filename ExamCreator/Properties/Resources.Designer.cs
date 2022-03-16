@@ -63,9 +63,29 @@ namespace ExamCreator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap polzunova {
+            get {
+                object obj = ResourceManager.GetObject("polzunova", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap school20 {
             get {
                 object obj = ResourceManager.GetObject("school20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ugk {
+            get {
+                object obj = ResourceManager.GetObject("ugk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

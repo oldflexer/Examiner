@@ -120,7 +120,7 @@ namespace ExamCreator.Forms
             // 
             // picEmblem
             // 
-            this.picEmblem.Image = global::ExamCreator.Properties.Resources.school20;
+            this.picEmblem.Image = global::ExamCreator.Properties.Resources.ugk;
             this.picEmblem.ImageLocation = "";
             this.picEmblem.Location = new System.Drawing.Point(355, 155);
             this.picEmblem.Name = "picEmblem";
