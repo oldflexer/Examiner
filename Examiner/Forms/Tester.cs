@@ -137,11 +137,11 @@ namespace Examiner.Forms
             // Отчищаем текущие ответы на вопрос
             _answers[_currentIndex].Clear();
             
-            // Сохраняем ответы со страницы экзаменатора
-            foreach (var cb in _checkBoxes.Where(cb => cb.Checked))
-            {
-                _answers[_currentIndex].Add(Convert.ToInt32(cb.Tag));
-            }
+            // // Сохраняем ответы со страницы экзаменатора
+            // foreach (var cb in _checkBoxes.Where(cb => cb.Checked))
+            // {
+            //     _answers[_currentIndex].Add(Convert.ToInt32(cb.Tag));
+            // }
             
             // Если пользователь на первой странице, то выходим из функции
             if (_currentIndex == 0) return;
@@ -166,11 +166,11 @@ namespace Examiner.Forms
             // Отчищаем текущие ответы на вопрос
             _answers[_currentIndex].Clear();
             
-            // Сохраняем ответы со страницы экзаменатора
-            foreach (var cb in _checkBoxes.Where(cb => cb.Checked))
-            {
-                _answers[_currentIndex].Add(Convert.ToInt32(cb.Tag));
-            }
+            // // Сохраняем ответы со страницы экзаменатора
+            // foreach (var cb in _checkBoxes.Where(cb => cb.Checked))
+            // {
+            //     _answers[_currentIndex].Add(Convert.ToInt32(cb.Tag));
+            // }
             
             // Если пользователь на последней странице, то выходим из функции
             if (_currentIndex == _pages.Count - 1) return;
