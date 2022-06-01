@@ -100,10 +100,16 @@
         <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Tests" />
-    </ItemGroup>
-    <ItemGroup>
+      <Content Include="Resources\polzunova.png" />
       <Content Include="Resources\school20.png" />
+      <Content Include="Resources\ugk.png" />
+      <Content Include="Tests\12icq.xml" />
+      <Content Include="Tests\ccc.xml" />
+      <Content Include="Tests\newkey.xml" />
+      <Content Include="Tests\ooo.xml" />
+      <Content Include="Tests\qwerty.xml" />
+      <Content Include="Tests\yandexEDA.xml" />
+      <Content Include="Tests\да.xml" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
