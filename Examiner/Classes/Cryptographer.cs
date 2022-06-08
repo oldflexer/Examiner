@@ -9,23 +9,24 @@ namespace Examiner.Classes
     public class Cryptographer
     {
         /// <summary>
-        /// Ключ шифрования
-        /// </summary>
-        private byte _key = 111;
-
-        /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="filename"></param>
         public Cryptographer(string filename)
         {
-            // Функция расшифрования XOR
+            // Собственная функция расшифровки XOR
             byte[] Crypt(byte[] bytes)
             {
+                double len = Buffer.ByteLength(bytes);
+                while (len/256 >= 1)
+                {
+                    len /= len/256+1;
+                }
+
+                byte key = Convert.ToByte(Convert.ToInt32(len));
                 for (var i = 0; i < bytes.Length; i++)
                 {
-                    bytes[i] ^= _key;
-                    _key += 1;
+                    bytes[i] ^= key;
                 }
                 return bytes;
             }
