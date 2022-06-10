@@ -11,10 +11,42 @@ namespace ExamCreator.Classes
     public class Saver
     {
         /// <summary>
+        /// Список страниц теста
+        /// </summary>
+        private List<Page> _pages;
+        
+        /// <summary>
+        /// Полное имя файла
+        /// </summary>
+        private string _filename;
+
+        /// <summary>
+        /// Переменная отслеживания сохранения теста
+        /// </summary>
+        private bool _isSaving;
+        
+        /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="pages"></param>
         public Saver(List<Page> pages)
+        {
+            _pages = pages;
+            _filename = "";
+
+            _isSaving = IsDialogCompleted();
+
+            if (_isSaving)
+            {
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// Функция диалогового окна
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDialogCompleted()
         {
             // Диалог с пользователем "Сохранить как"
             var saveDialog = new SaveFileDialog(); 
@@ -23,22 +55,30 @@ namespace ExamCreator.Classes
             // Если пользователь прервал операцию, то выходим из конструктора
             if (saveDialog.ShowDialog() == DialogResult.Cancel)
             {
-                return;
+                return false;
             }
 
             // Полное имя файла
-            var filename = saveDialog.FileName;
-            
+            _filename = saveDialog.FileName;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Функция сохранения в файл
+        /// </summary>
+        private void Save()
+        {
             // Сериализация xml (Сохраняем список страниц теста в xml файл)
             var formatter = new XmlSerializer(typeof(Page[]));
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
+            using (var fs = new FileStream(_filename, FileMode.OpenOrCreate))
             {
-                var temp = pages.ToArray();
+                var temp = _pages.ToArray();
                 formatter.Serialize(fs, temp);
             }
             
             // Шифрование файла теста
-            var cryptographer = new Cryptographer(filename);
+            var cryptographer = new Cryptographer(_filename);
         }
     }
 }

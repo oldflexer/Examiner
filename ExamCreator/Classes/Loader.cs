@@ -11,6 +11,31 @@ namespace ExamCreator.Classes
     public class Loader
     {
         /// <summary>
+        /// Список страниц теста
+        /// </summary>
+        private IReadOnlyList<Page> _pages;
+
+        /// <summary>
+        /// Индекс текущей страницы
+        /// </summary>
+        private int _currentIndex;
+        
+        /// <summary>
+        /// Текущая страница
+        /// </summary>
+        private Page _page;
+        
+        /// <summary>
+        /// Список полей для ввода
+        /// </summary>
+        private List<MaterialTextBox2> _textBoxes;
+        
+        /// <summary>
+        /// Список чекбоксов
+        /// </summary>
+        private List<MaterialCheckbox> _checkBoxes;
+        
+        /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="pages"></param>
@@ -19,40 +44,52 @@ namespace ExamCreator.Classes
         /// <param name="checkBoxes"></param>
         public Loader(IReadOnlyList<Page> pages, int currentIndex, ref List<MaterialTextBox2> textBoxes, ref List<MaterialCheckbox> checkBoxes)
         {
+            _pages = pages;
+            _currentIndex = currentIndex;
+            _textBoxes = textBoxes;
+            _checkBoxes = checkBoxes;
             // Определяем страницу теста под текущим индексом из списка страниц
-            var page = pages[currentIndex];
+            _page = pages[currentIndex];
 
+            Load();
+        }
+
+        /// <summary>
+        /// Функция загрузки страницы
+        /// </summary>
+        private void Load()
+        {
             // Записываем данные со страницы в поля редактора
-            for (var i = 0; i < textBoxes.Count; i++)
+            for (var i = 0; i < _textBoxes.Count; i++)
             {
                 switch (i)
                 {
                     case 0:
-                        textBoxes[i].Text = page.Question;
+                        _textBoxes[i].Text = _page.Question;
                         break;
                     case 1:
-                        textBoxes[i].Text = page.Answer1;
+                        _textBoxes[i].Text = _page.Answer1;
                         break;
                     case 2:
-                        textBoxes[i].Text = page.Answer2;
+                        _textBoxes[i].Text = _page.Answer2;
                         break;
                     case 3:
-                        textBoxes[i].Text = page.Answer3;
+                        _textBoxes[i].Text = _page.Answer3;
                         break;
                     case 4:
-                        textBoxes[i].Text = page.Answer4;
+                        _textBoxes[i].Text = _page.Answer4;
                         break;
                 }
             }
 
             // Отмечаем чекбоксы со страницы в чекбоксы редактора
-            foreach (var cb in checkBoxes)
+            foreach (var cb in _checkBoxes)
             {
                 // Сначала отчистим все
                 cb.Checked = false;
 
                 // Отметим верные
-                foreach (var index in page.Correct.Where(index => Convert.ToInt32(cb.Tag) == index))
+                foreach (var index in _page.Correct.Where(index => Convert.ToInt32(cb.Tag) == index))
                 {
                     cb.Checked = true;
                 }

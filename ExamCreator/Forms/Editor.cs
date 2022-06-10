@@ -16,21 +16,26 @@ namespace ExamCreator.Forms
         /// Список страниц теста
         /// </summary>
         private readonly List<Page> _pages = new List<Page>();
+        
         /// <summary>
         /// Индекс текущей страницы
         /// </summary>
         private int _currentIndex;
+        
         /// <summary>
-        /// Списки полей для ввода и чекбоксов
+        /// Списки полей для ввода
         /// </summary>
         private List<MaterialTextBox2> _textBoxes = new List<MaterialTextBox2>();
-        private List<MaterialCheckbox> _checkBoxes = new List<MaterialCheckbox>();
         
+        /// <summary>
+        /// Список чекбоксов
+        /// </summary>
+        private List<MaterialCheckbox> _checkBoxes = new List<MaterialCheckbox>();
+
         /// <summary>
         /// Конструктор редактора
         /// </summary>
-        /// <param name="opening"></param>
-        public Editor(ref bool opening)
+        public Editor(bool isOpening)
         {
             InitializeComponent();
             
@@ -51,34 +56,47 @@ namespace ExamCreator.Forms
             _checkBoxes.Add(cbThree);
             _checkBoxes.Add(cbFour);
 
-            // Если происходит открытие теста для редактирования, то
-            if (opening)
+            switch (isOpening)
             {
-                // Создаем объект класса открытия
-                var open = new Opener(ref _pages, ref _textBoxes, ref _checkBoxes, ref opening);
-                // Если пользователь прервал открытие, то выходим из функции
-                if (!opening)
+                // Если происходит открытие теста для редактирования, то
+                case true:
                 {
-                    return;
+                    // Создаем объект класса открытия
+                    var open = new Opener(ref _pages, ref _textBoxes, ref _checkBoxes);
+
+                    if (!open.isOpening)
+                    {
+                        goto case false;
+                    }
+
+                    // Обновляем полосу прогресса и надпись текущего вопроса
+                    UpdateProgress(_pages.Count, 1);
+                    break;
                 }
+                // Иначе происходит создание нового теста
+                case false:
+                {
+                    // Создаем новую страницу и добавляем ее в список страниц
+                    var page = new Page(tQuestion, tAnswer1, tAnswer2, tAnswer3, tAnswer4, cbOne, cbTwo, cbThree, cbFour, gData);
+                    _pages.Add(page);
                 
-                // Обновляем полосу прогресса и надпись текущего вопроса
-                pbQuestions.Maximum = _pages.Count;
-                pbQuestions.Value = 1;
-                lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+                    // Обновляем полосу прогресса и надпись текущего вопроса
+                    UpdateProgress(_pages.Count, 1);
+                    break;
+                }
             }
-            // Иначе происходит создание нового теста
-            else
-            {
-                // Создаем новую страницу и добавляем ее в список страниц
-                var page = new Page(tQuestion, tAnswer1, tAnswer2, tAnswer3, tAnswer4, cbOne, cbTwo, cbThree, cbFour, gData);
-                _pages.Add(page);
-                
-                // Обновляем полосу прогресса и надпись текущего вопроса
-                pbQuestions.Maximum = _pages.Count;
-                pbQuestions.Value = 1;
-                lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
-            }
+        }
+
+        /// <summary>
+        /// Функция обновления прогресса
+        /// </summary>
+        /// <param name="maximum"></param>
+        /// <param name="value"></param>
+        private void UpdateProgress(int maximum, int value)
+        {
+            pbQuestions.Maximum = maximum;
+            pbQuestions.Value = value;
+            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
         }
         
         /// <summary>
@@ -154,9 +172,7 @@ namespace ExamCreator.Forms
             _currentIndex = _pages.Count - 1;
 
             // Обновляем полосу прогресса и надпись текущего вопроса
-            pbQuestions.Maximum += 1;
-            pbQuestions.Value = _pages.Count;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+            UpdateProgress(+1, _pages.Count);
         }
         
         /// <summary>
@@ -205,10 +221,7 @@ namespace ExamCreator.Forms
             _pages.RemoveAt(_currentIndex);
 
             // Обновляем полосу прогресса и надпись текущего вопроса
-            bPrev.PerformClick();
-            pbQuestions.Maximum -= 1;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
-
+            UpdateProgress(-1, -1);
         }
 
         /// <summary>
@@ -227,8 +240,7 @@ namespace ExamCreator.Forms
             var load = new Loader(_pages, _currentIndex, ref _textBoxes, ref _checkBoxes);
             
             // Обновляем полосу прогресса и надпись текущего вопроса
-            pbQuestions.Value -= 1;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+            UpdateProgress(_pages.Count, -1);
         }
 
         /// <summary>
@@ -247,8 +259,7 @@ namespace ExamCreator.Forms
             var load = new Loader(_pages, _currentIndex, ref _textBoxes, ref _checkBoxes);
             
             // Обновляем полосу прогресса и надпись текущего вопроса
-            pbQuestions.Value += 1;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+            UpdateProgress(_pages.Count, +1);
         }
     }
 }

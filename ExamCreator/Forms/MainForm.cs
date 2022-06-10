@@ -10,9 +10,9 @@ namespace ExamCreator.Forms
     public partial class MainForm : MaterialForm
     {
         /// <summary>
-        /// Переменная для отслеживания открытия теста
+        /// Переменная открытия редактора
         /// </summary>
-        private bool _opening;
+        private bool _isOpening;
         
         /// <summary>
         /// Конструктор главной формы
@@ -40,11 +40,11 @@ namespace ExamCreator.Forms
         /// <param name="e"></param>
         private void bNew_Click(object sender, EventArgs e)
         {
+            _isOpening = false;
             // Создаем редактор для нового теста
-            _opening = false;
-            var editor = new Editor(ref _opening);
+            var editor = new Editor(_isOpening);
             
-            // Отображаем едактор, скрываем меню
+            // Отображаем редактор, скрываем меню
             editor.Show();
             Hide();
         }
@@ -56,12 +56,12 @@ namespace ExamCreator.Forms
         /// <param name="e"></param>
         private void bOpen_Click(object sender, EventArgs e)
         {
+            _isOpening = true;
             // Создаем редактор для открытого теста
-            _opening = true;
-            var editor = new Editor(ref _opening);
+            var editor = new Editor(_isOpening);
 
             // Если пользователь прервал открытие, то выходим из функции
-            if (!_opening)
+            if (!_isOpening)
             {
                 return;
             }
