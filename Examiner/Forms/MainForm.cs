@@ -12,7 +12,7 @@ namespace Examiner.Forms
         /// <summary>
         /// Переменная для отслеживания открытия теста
         /// </summary>
-        private bool _opening;
+        private bool _isOpening;
         
         /// <summary>
         /// Конструктор главной формы
@@ -41,14 +41,11 @@ namespace Examiner.Forms
         private void bOpen_Click(object sender, EventArgs e)
         {
             // Создаем экзаменатор для открытого теста
-            _opening = true;
-            var tester = new Tester(ref _opening);
-
-            // Если пользователь прервал открытие, то выходим из функции
-            if (!_opening)
-            {
-                return;
-            }
+            _isOpening = true;
+            var tester = new Tester(ref _isOpening);
+            
+            // Если открытие теста прервано, то ничего не происходит
+            if (!_isOpening) return;
             
             // Отображаем экзаменатор, скрываем меню
             tester.Show();

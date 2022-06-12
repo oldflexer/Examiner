@@ -40,9 +40,9 @@ namespace ExamCreator.Forms
         /// <param name="e"></param>
         private void bNew_Click(object sender, EventArgs e)
         {
-            _isOpening = false;
             // Создаем редактор для нового теста
-            var editor = new Editor(_isOpening);
+            _isOpening = false;
+            var editor = new Editor(ref _isOpening);
             
             // Отображаем редактор, скрываем меню
             editor.Show();
@@ -56,15 +56,12 @@ namespace ExamCreator.Forms
         /// <param name="e"></param>
         private void bOpen_Click(object sender, EventArgs e)
         {
-            _isOpening = true;
             // Создаем редактор для открытого теста
-            var editor = new Editor(_isOpening);
-
-            // Если пользователь прервал открытие, то выходим из функции
-            if (!_isOpening)
-            {
-                return;
-            }
+            _isOpening = true;
+            var editor = new Editor(ref _isOpening);
+            
+            // Если открытие теста прервано, то ничего не происходит
+            if (!_isOpening) return;
             
             // Отображаем редактор, скрываем меню
             editor.Show();

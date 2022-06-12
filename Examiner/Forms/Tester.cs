@@ -37,8 +37,8 @@ namespace Examiner.Forms
         /// <summary>
         /// Стандартный конструктор
         /// </summary>
-        /// <param name="opening"></param>
-        public Tester(ref bool opening)
+        /// <param name="isOpening"></param>
+        public Tester(ref bool isOpening)
         {
             InitializeComponent();
             
@@ -59,17 +59,28 @@ namespace Examiner.Forms
             _checkBoxes.Add(cbTwo);
             _checkBoxes.Add(cbThree);
             _checkBoxes.Add(cbFour);
+
+            switch (isOpening)
+            {
+                // Если происходит открытие теста для редактирования, то
+                case true:
+                {
+                    // Создаем объект класса открытия
+                    var open = new Opener(ref _pages, ref _labels, ref _checkBoxes, ref isOpening);
+                    
+                    // Если пользователь прервал открытие, то выходим из функции
+                    if (!isOpening)
+                    {
+                        return;
+                    }
+                }
+            }
             
             // Если происходит открытие теста для прохождения, то
-            if (opening)
+            if (isOpening)
             {
-                // Создаем объект класса открытия
-                var open = new Opener(ref _pages, ref _labels, ref _checkBoxes, ref opening);
-                // Если пользователь прервал открытие, то выходим из функции
-                if (!opening)
-                {
-                    return;
-                }
+                
+                
                 
                 // Обновляем полосу прогресса и надпись текущего вопроса
                 pbQuestions.Maximum = _pages.Count;

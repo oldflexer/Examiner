@@ -9,19 +9,34 @@ namespace ExamCreator.Classes
     public class Cryptographer
     {
         /// <summary>
+        /// Файл с тестом
+        /// </summary>
+        private readonly byte[] _testFile;
+        
+        /// <summary>
+        /// Зашифрованный файл теста
+        /// </summary>
+        private readonly byte[] _encryptedFile;
+        
+        /// <summary>
+        /// Новое имя зашифрованного файла
+        /// </summary>
+        private readonly string _newFileName;
+        
+        /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="filename"></param>
         public Cryptographer(string filename)
         {
             // Загружаем файл теста .xml
-            var myFile = File.ReadAllBytes(filename);
+            _testFile = File.ReadAllBytes(filename);
             // Зашифровываем файл
-            var newFile = Crypt(myFile);
+            _encryptedFile = Crypt(_testFile);
             // Определяем новое расширение
-            var newFileName = NewFileName(filename);
+            _newFileName = NewFileName(filename);
             // Сохраняем зашифрованный файл с новым расширением
-            File.WriteAllBytes(newFileName, newFile);
+            File.WriteAllBytes(_newFileName, _encryptedFile);
         }
         
         /// <summary>
