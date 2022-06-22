@@ -17,22 +17,26 @@ namespace Examiner.Forms
         /// Список страниц теста
         /// </summary>
         private readonly List<Page> _pages = new List<Page>();
+        
         /// <summary>
         /// Индекс текущей страницы
         /// </summary>
         private int _currentIndex;
+        
         /// <summary>
         /// Список надписей
         /// </summary>
         private List<MaterialLabel> _labels = new List<MaterialLabel>();
+        
         /// <summary>
         /// Список чекбоксов
         /// </summary>
         private List<MaterialCheckbox> _checkBoxes = new List<MaterialCheckbox>();
+        
         /// <summary>
         /// Список из списков отмеченных ответов
         /// </summary>
-        private readonly List<List<int>> _answers = new List<List<int>>();
+        private List<List<int>> _answers = new List<List<int>>();
 
         /// <summary>
         /// Стандартный конструктор
@@ -66,7 +70,7 @@ namespace Examiner.Forms
                 case true:
                 {
                     // Создаем объект класса открытия
-                    var open = new Opener(ref _pages, ref _labels, ref _checkBoxes);
+                    var open = new Opener(ref _pages, ref _labels, ref _checkBoxes, ref _answers);
 
                     // Если пользователь прервал открытие, то выходим из функции
                     if (!open.IsOpening)
@@ -74,10 +78,10 @@ namespace Examiner.Forms
                         isOpening = false;
                         return;
                     }
-                    
+
                     // Обновляем полосу прогресса и надпись текущего вопроса
                     UpdateProgress(_pages.Count, 1, true, true);
-                    
+
                     break;
                 }
                 case false:
@@ -89,7 +93,7 @@ namespace Examiner.Forms
         }
         
         /// <summary>
-        /// ункция обновления прогресса
+        /// Функция обновления прогресса
         /// </summary>
         /// <param name="maximum"></param>
         /// <param name="value"></param>

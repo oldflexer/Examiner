@@ -33,7 +33,7 @@ namespace Examiner.Classes
         /// <summary>
         /// Массив ответов пользователя
         /// </summary>
-        private IReadOnlyList<List<int>> _answers;
+        private readonly IReadOnlyList<List<int>> _answers;
 
         /// <summary>
         /// Стандартный конструктор
@@ -128,6 +128,7 @@ namespace Examiner.Classes
 
                 // Если пользователь еще не давал ответов на этот вопрос, то пропускаем итерацию
                 if (_answers?[_currentIndex] == null) continue;
+                
                 // Выводим ответы пользователя и включаем отображение
                 foreach (var answer in _answers[_currentIndex].Where(answer => Convert.ToInt32(cb.Tag) == answer))
                 {

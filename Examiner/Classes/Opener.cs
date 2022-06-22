@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using MaterialSkin.Controls;
@@ -15,7 +16,7 @@ namespace Examiner.Classes
         /// <summary>
         /// Список страниц теста
         /// </summary>
-        private List<Page> _pages;
+        private readonly List<Page> _pages;
         
         /// <summary>
         /// Список полей для ввода
@@ -36,20 +37,26 @@ namespace Examiner.Classes
         /// Переменная отслеживания открытия теста
         /// </summary>
         public readonly bool IsOpening;
-        
+
+        /// <summary>
+        /// Список ответов пользователя
+        /// </summary>
+        public List<List<int>> _answers;
+
         /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="pages"></param>
         /// <param name="labels"></param>
         /// <param name="checkBoxes"></param>
-        public Opener(ref List<Page> pages, ref List<MaterialLabel> labels, ref List<MaterialCheckbox> checkBoxes)
+        public Opener(ref List<Page> pages, ref List<MaterialLabel> labels, ref List<MaterialCheckbox> checkBoxes, ref List<List<int>> answers)
         {
             _pages = pages;
             _labels = labels;
             _checkBoxes = checkBoxes;
             _filename = "";
-            
+            _answers = answers;
+
             IsOpening = IsDialogCompleted();
 
             if (IsOpening)
@@ -148,6 +155,8 @@ namespace Examiner.Classes
 
                     // Добавляем страницу в список страниц
                     _pages.Add(page);
+
+                    _answers.Add(new List<int>());
                 }
             }
             // Иначе добавляем в список страниц пустую страницу
