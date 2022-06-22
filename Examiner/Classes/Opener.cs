@@ -13,17 +13,57 @@ namespace Examiner.Classes
     public class Opener
     {
         /// <summary>
+        /// Список страниц теста
+        /// </summary>
+        private List<Page> _pages;
+        
+        /// <summary>
+        /// Список полей для ввода
+        /// </summary>
+        private List<MaterialLabel> _labels;
+        
+        /// <summary>
+        /// Список чекбоксов
+        /// </summary>
+        private List<MaterialCheckbox> _checkBoxes;
+
+        /// <summary>
+        /// Полное имя файла
+        /// </summary>
+        private string _filename;
+        
+        /// <summary>
+        /// Переменная отслеживания открытия теста
+        /// </summary>
+        public readonly bool IsOpening;
+        
+        /// <summary>
         /// Стандартный конструктор
         /// </summary>
         /// <param name="pages"></param>
         /// <param name="labels"></param>
         /// <param name="checkBoxes"></param>
-        /// <param name="opening"></param>
-        public Opener(ref List<Page> pages, ref List<MaterialLabel> labels, ref List<MaterialCheckbox> checkBoxes, ref bool opening)
+        public Opener(ref List<Page> pages, ref List<MaterialLabel> labels, ref List<MaterialCheckbox> checkBoxes)
         {
-            // Отчищаем список страниц
-            pages.Clear();
+            _pages = pages;
+            _labels = labels;
+            _checkBoxes = checkBoxes;
+            _filename = "";
+            
+            IsOpening = IsDialogCompleted();
 
+            if (IsOpening)
+            {
+                Open();
+            }
+        }
+
+        /// <summary>
+        /// Функция диалогового окна
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDialogCompleted()
+        {
             // Диалог с пользователем "Открыть"
             var openDialog = new OpenFileDialog();
             openDialog.Filter = @"Test file(*.crypt)|*.crypt|All files(*.*)|*.*";
@@ -31,15 +71,25 @@ namespace Examiner.Classes
             // Если пользователь прервал операцию, то вернемся в главное меню
             if (openDialog.ShowDialog() == DialogResult.Cancel)
             {
-                opening = false;
-                return;
+                return false;
             }
-
+            
             // Полное имя файла
-            var filename = openDialog.FileName;
+            _filename = openDialog.FileName;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Функция чтения файла
+        /// </summary>
+        private void Open()
+        {
+            // Отчищаем список страниц
+            _pages.Clear();
 
             // Определяем шифровальщик и расшифровываем файл
-            var cryptographer = new Cryptographer(filename);
+            var cryptographer = new Cryptographer(_filename);
 
             // Временный каталог хранения теста
             const string path = @"C:\temp\Examiner";
@@ -49,11 +99,11 @@ namespace Examiner.Classes
             }
 
             // Полное имя файла
-            filename = path + @"\tmp.xml";
+            _filename = path + @"\tmp.xml";
 
             // Определим и загрузим открываемый xml файл
             var xDoc = new XmlDocument();
-            xDoc.Load(filename);
+            xDoc.Load(_filename);
 
             // Определим корневой элемент xml файла
             var xRoot = xDoc.DocumentElement;
@@ -97,20 +147,20 @@ namespace Examiner.Classes
                     }
 
                     // Добавляем страницу в список страниц
-                    pages.Add(page);
+                    _pages.Add(page);
                 }
             }
             // Иначе добавляем в список страниц пустую страницу
             else
             {
-                pages.Add(new Page());
+                _pages.Add(new Page());
             }
             
             // Загружаем первую страницу в редактор
-            var load = new Loader(pages, 0, ref labels, ref checkBoxes);
+            var load = new Loader(_pages, 0, ref _labels, ref _checkBoxes);
             
             // Удаляем временный файл
-            File.Delete(filename);
+            File.Delete(_filename);
         }
     }
 }

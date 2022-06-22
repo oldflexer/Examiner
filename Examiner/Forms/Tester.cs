@@ -66,41 +66,66 @@ namespace Examiner.Forms
                 case true:
                 {
                     // Создаем объект класса открытия
-                    var open = new Opener(ref _pages, ref _labels, ref _checkBoxes, ref isOpening);
-                    
+                    var open = new Opener(ref _pages, ref _labels, ref _checkBoxes);
+
                     // Если пользователь прервал открытие, то выходим из функции
-                    if (!isOpening)
+                    if (!open.IsOpening)
                     {
+                        isOpening = false;
                         return;
                     }
+                    
+                    // Обновляем полосу прогресса и надпись текущего вопроса
+                    UpdateProgress(_pages.Count, 1, true, true);
+                    
+                    break;
+                }
+                case false:
+                {
+                    // Иначе ничего не происходит
+                    break;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// ункция обновления прогресса
+        /// </summary>
+        /// <param name="maximum"></param>
+        /// <param name="value"></param>
+        /// <param name="maximumAbsolute"></param>
+        /// <param name="valueAbsolute"></param>
+        private void UpdateProgress(int maximum, int value, bool maximumAbsolute, bool valueAbsolute)
+        {
+            switch (maximumAbsolute)
+            {
+                case true:
+                {
+                    pbQuestions.Maximum = maximum;
+                    break;
+                }
+                case false:
+                {
+                    pbQuestions.Maximum += maximum;
+                    break;
+                }
+            }
+
+            switch (valueAbsolute)
+            {
+                case true:
+                {
+                    pbQuestions.Value = value;
+                    break;
+                }
+                case false:
+                {
+                    pbQuestions.Value += value;
+                    break;
                 }
             }
             
-            // Если происходит открытие теста для прохождения, то
-            if (isOpening)
-            {
-                
-                
-                
-                // Обновляем полосу прогресса и надпись текущего вопроса
-                pbQuestions.Maximum = _pages.Count;
-                pbQuestions.Value = 1;
-                lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
-                // Определяем длину списка ответов, основываясь на длине теста
-                _answers = new List<List<int>>(_pages.Count);
-
-                // Определяем все ответы сначала как отрицательные
-                for (var i = 0; i < _answers.Capacity; i++)
-                {
-                    _answers.Add(new List<int>());
-                }
-            }
-            // Иначе выводим ошибку
-            else
-            {
-                MessageBox.Show("Ошибка в чтении файла!");
-                Close();
-            }
+            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
         }
 
         /// <summary>
@@ -110,6 +135,7 @@ namespace Examiner.Forms
         /// <param name="e"></param>
         private void Tester_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // Переходим в главную форму
             var mainForm = Application.OpenForms[0];
             mainForm.Show();
         }
@@ -154,8 +180,7 @@ namespace Examiner.Forms
             var load = new Loader(_pages, _currentIndex, ref _labels, ref _checkBoxes, _answers);
             
             // Обновляем полосу прогресса и надпись текущего вопроса
-            pbQuestions.Value -= 1;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+            UpdateProgress(_pages.Count, -1, true, false);
         }
 
         /// <summary>
@@ -174,8 +199,7 @@ namespace Examiner.Forms
             var load = new Loader(_pages, _currentIndex, ref _labels, ref _checkBoxes, _answers);
             
             // Обновляем полосу прогресса и надпись текущего вопроса
-            pbQuestions.Value += 1;
-            lQuestionNum.Text = $@"Вопрос {pbQuestions.Value}/{pbQuestions.Maximum}";
+            UpdateProgress(_pages.Count, +1, true, false);
         }
 
         /// <summary>

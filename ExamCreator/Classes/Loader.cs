@@ -11,29 +11,19 @@ namespace ExamCreator.Classes
     public class Loader
     {
         /// <summary>
-        /// Список страниц теста
-        /// </summary>
-        private IReadOnlyList<Page> _pages;
-
-        /// <summary>
-        /// Индекс текущей страницы
-        /// </summary>
-        private int _currentIndex;
-        
-        /// <summary>
         /// Текущая страница
         /// </summary>
-        private Page _page;
+        private readonly Page _page;
         
         /// <summary>
         /// Список полей для ввода
         /// </summary>
-        private List<MaterialTextBox2> _textBoxes;
+        private readonly List<MaterialTextBox2> _textBoxes;
         
         /// <summary>
         /// Список чекбоксов
         /// </summary>
-        private List<MaterialCheckbox> _checkBoxes;
+        private readonly List<MaterialCheckbox> _checkBoxes;
         
         /// <summary>
         /// Стандартный конструктор
@@ -44,8 +34,6 @@ namespace ExamCreator.Classes
         /// <param name="checkBoxes"></param>
         public Loader(IReadOnlyList<Page> pages, int currentIndex, ref List<MaterialTextBox2> textBoxes, ref List<MaterialCheckbox> checkBoxes)
         {
-            _pages = pages;
-            _currentIndex = currentIndex;
             _textBoxes = textBoxes;
             _checkBoxes = checkBoxes;
             // Определяем страницу теста под текущим индексом из списка страниц

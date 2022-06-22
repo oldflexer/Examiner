@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -14,57 +15,77 @@ namespace Examiner.Classes
         /// <summary>
         /// Набранные баллы
         /// </summary>
-        private readonly double _score = 0;
+        private double _score = 0;
+        
         /// <summary>
         /// Максимально возможные баллы
         /// </summary>
-        private readonly double _maxScore = 0;
+        private double _maxScore = 0;
+        
         /// <summary>
         /// Временная переменная верных ответов
         /// </summary>
-        private readonly double _tempScore = 0;
+        private double _tempScore = 0;
+        
         /// <summary>
         /// Кол-во полных верных ответов на вопросы
         /// </summary>
-        private readonly double _scoreQuestions = 0;
+        private double _scoreQuestions = 0;
+        
         /// <summary>
         /// Максимально возможное кол-во полных верных ответов на вопросы
         /// </summary>
-        private readonly double _maxScoreQuestions = 0;
+        private double _maxScoreQuestions = 0;
+        
         /// <summary>
         /// Оценка за тест
         /// </summary>
-        private readonly int _mark = 0;
+        private int _mark = 0;
+        
         /// <summary>
         /// Объект MS Office Excel
         /// </summary>
-        private readonly Excel.Application _excelApp;
+        private Excel.Application _excelApp;
+        
         /// <summary>
         /// Объект состоящий из рабочих книг Excel
         /// </summary>
-        private readonly Excel.Workbooks _excelAppWorkbooks;
+        private Excel.Workbooks _excelAppWorkbooks;
+        
         /// <summary>
         /// Объект - рабочая книга
         /// </summary>
-        private readonly Excel.Workbook _excelAppWorkbook;
+        private Excel.Workbook _excelAppWorkbook;
+        
         /// <summary>
         /// Объект состоящий из страниц книги
         /// </summary>
-        private readonly Excel.Sheets _excelSheets;
+        private Excel.Sheets _excelSheets;
+        
         /// <summary>
         /// Объект - текущая рабочая страница
         /// </summary>
-        private readonly Excel.Worksheet _excelWorksheet;
+        private Excel.Worksheet _excelWorksheet;
+        
         /// <summary>
         /// Объект - диапазон ячеек страницы
         /// </summary>
-        private readonly Excel.Range _excelCells;
+        private Excel.Range _excelCells;
+        
         /// <summary>
         /// Путь к папке "Мои документы"
         /// </summary>
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string _path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
+        /// <summary>
+        /// Список вопросов теста
+        /// </summary>
+        private readonly List<Page> _pages;
 
+        /// <summary>
+        /// Список ответов пользователя
+        /// </summary>
+        private readonly IReadOnlyList<List<int>> _answers;
 
         /// <summary>
         /// Стандартный конструктор
@@ -73,28 +94,35 @@ namespace Examiner.Classes
         /// <param name="answers"></param>
         public Saver(List<Page> pages, IReadOnlyList<List<int>> answers)
         {
+            _pages = pages;
+            _answers = answers;
+            
+            CalculatingMark();
+            SaveResults();
+            ShowMark();
+        }
+
+        private void CalculatingMark()
+        {
             // Подсчет максимально возможных баллов в тесте
-            foreach (var page in pages)
+            foreach (var page in from page in _pages from cb in page.Correct select page)
             {
-                foreach (var cb in page.Correct)
-                {
-                    _maxScore += 1;
-                }
+                _maxScore += 1;
             }
             
             // Подсчет набранных баллов пользователем в тесте
-            for (var i = 0; i < answers.Count; i++)
+            for (var i = 0; i < _answers.Count; i++)
             {
                 _tempScore = 0;
                 for (var j = 1; j <= 4; j++)
                 {
-                    if (answers[i].Contains(j) && pages[i].Correct.Contains(j))
+                    if (_answers[i].Contains(j) && _pages[i].Correct.Contains(j))
                     {
                         _tempScore += 1;
                     }
                     else
                     {
-                        if (!answers[i].Contains(j) || pages[i].Correct.Contains(j)) continue;
+                        if (!_answers[i].Contains(j) || _pages[i].Correct.Contains(j)) continue;
                         _tempScore = 0;
                         break;
                     }
@@ -104,13 +132,14 @@ namespace Examiner.Classes
 
             // Обнуляем временную переменную
             _tempScore = 0;
+            
             // Подсчет кол-во полных верных ответов на вопросы пользователем в тесте
-            for (var i = 0; i < answers.Count; i++)
+            for (var i = 0; i < _answers.Count; i++)
             {
                 _tempScore += 1;
                 for (var j = 1; j <= 4; j++)
                 {
-                    if (answers[i].Contains(j) && pages[i].Correct.Contains(j) || !answers[i].Contains(j) && !pages[i].Correct.Contains(j))
+                    if (_answers[i].Contains(j) && _pages[i].Correct.Contains(j) || !_answers[i].Contains(j) && !_pages[i].Correct.Contains(j))
                     {
                     }
                     else
@@ -120,19 +149,22 @@ namespace Examiner.Classes
                     }
                 }
             }
+            
             // Определяем максимально возможное кол-во полных верных ответов на вопросы
-            _maxScoreQuestions = pages.Count;
+            _maxScoreQuestions = _pages.Count;
+            
             // Кол-во полных верных ответов на вопросы пользователем
             _scoreQuestions = _tempScore;
+            
             // Переводим в проценты набранные баллы из максимальных
             _tempScore = Math.Round(Convert.ToDouble(_score) / Convert.ToDouble(_maxScore) * 100, 2);
 
             // Определяем оценку за тест
-            if (_tempScore < 45)
+            if (_tempScore < 50)
             {
                 _mark = 2;
             }
-            else if (_tempScore < 70)
+            else if (_tempScore < 75)
             {
                 _mark = 3;
             }
@@ -144,7 +176,10 @@ namespace Examiner.Classes
             {
                 _mark = 5;
             }
+        }
 
+        private void SaveResults()
+        {
             // Запуск приложения Excel
             // Visible - отображать работу, DisplayAlerts - отображать всплывающие окна
             _excelApp = new Excel.ApplicationClass();
@@ -172,27 +207,27 @@ namespace Examiner.Classes
             var row = 2;
             var table = 1;
             _excelCells = (Excel.Range)_excelWorksheet.Cells[row, table];
-            for (var i = 0; i < pages.Count; i++)
+            for (var i = 0; i < _pages.Count; i++)
             {
-                _excelCells.Value2 = pages[i].Question;
+                _excelCells.Value2 = _pages[i].Question;
 
                 table += 1;
                 _excelCells = (Excel.Range)_excelWorksheet.Cells[row, table];
-                foreach (var pageAnswer in answers[i])
+                foreach (var pageAnswer in _answers[i])
                 {
                     switch (pageAnswer)
                     {
                         case 1:
-                            _excelCells.Value2 += pages[i].Answer1 + @"; ";
+                            _excelCells.Value2 += _pages[i].Answer1 + @"; ";
                             break;
                         case 2:
-                            _excelCells.Value2 += pages[i].Answer2 + @"; ";
+                            _excelCells.Value2 += _pages[i].Answer2 + @"; ";
                             break;
                         case 3:
-                            _excelCells.Value2 += pages[i].Answer3 + @"; ";
+                            _excelCells.Value2 += _pages[i].Answer3 + @"; ";
                             break;
                         case 4:
-                            _excelCells.Value2 += pages[i].Answer4 + @"; ";
+                            _excelCells.Value2 += _pages[i].Answer4 + @"; ";
                             break;
                     }
                 }
@@ -209,14 +244,17 @@ namespace Examiner.Classes
             // Сохраняем рабочую книгу в папку "Мои документы\Examiner"
             _excelAppWorkbooks = _excelApp.Workbooks;
             _excelAppWorkbook = _excelAppWorkbooks[1];
-            path += @"\Examiner";
-            if (!Directory.Exists(path))
+            _path += @"\Examiner";
+            if (!Directory.Exists(_path))
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(_path);
             }
-            _excelAppWorkbook.SaveAs(path + @"\Results.xlsx");
+            _excelAppWorkbook.SaveAs(_path + @"\Results.xlsx");
             _excelApp.Quit();
+        }
 
+        private void ShowMark()
+        {
             // Выводим сообщение о кол-ве набранных баллов пользователю
             MessageBox.Show($"Кол-во набранных баллов: {_score}/{_maxScore}\n" +
                             $"Процент: {Math.Round(Convert.ToDouble(_score) / Convert.ToDouble(_maxScore) * 100, 2)}%\n" +

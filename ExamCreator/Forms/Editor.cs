@@ -65,7 +65,7 @@ namespace ExamCreator.Forms
                     var open = new Opener(ref _pages, ref _textBoxes, ref _checkBoxes);
                     
                     // Если открытие прервано
-                    if (!open.isOpening)
+                    if (!open.IsOpening)
                     {
                         isOpening = false;
                         return;

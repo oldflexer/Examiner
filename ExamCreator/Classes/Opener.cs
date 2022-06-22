@@ -30,11 +30,11 @@ namespace ExamCreator.Classes
         /// Полное имя файла
         /// </summary>
         private string _filename;
-        
+
         /// <summary>
         /// Переменная отслеживания открытия теста
         /// </summary>
-        public readonly bool isOpening;
+        public readonly bool IsOpening;
 
         /// <summary>
         /// Стандартный конструктор
@@ -49,9 +49,9 @@ namespace ExamCreator.Classes
             _checkBoxes = checkBoxes;
             _filename = "";
             
-            isOpening = IsDialogCompleted();
+            IsOpening = IsDialogCompleted();
 
-            if (isOpening)
+            if (IsOpening)
             {
                 Open();
             }
