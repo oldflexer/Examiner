@@ -73,7 +73,6 @@ namespace ExamCreator.Forms
                     
                     // Обновляем полосу прогресса и надпись текущего вопроса
                     UpdateProgress(_pages.Count, 1, true, true);
-                    
                     break;
                 }
                 // Иначе происходит создание нового теста
@@ -252,12 +251,20 @@ namespace ExamCreator.Forms
             _pages.RemoveAt(_currentIndex);
 
             // Уменьшаем текущий индекс на 1
-            _currentIndex -= 1;
+            switch (_currentIndex)
+            {
+                case 0:
+                    break;
+                case >0:
+                    _currentIndex -= 1;
+                    break;
+            }
+
             // Загружаем предыдущую страницу
             var load = new Loader(_pages, _currentIndex, ref _textBoxes, ref _checkBoxes);
             
             // Обновляем полосу прогресса и надпись текущего вопроса
-            UpdateProgress(_pages.Count, -1, true, false);
+            UpdateProgress(_pages.Count, _currentIndex+1, true, true);
         }
 
         /// <summary>

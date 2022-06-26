@@ -14,22 +14,27 @@ namespace ExamCreator.Classes
         /// Вопрос на странице
         /// </summary>
         public string Question;
+        
         /// <summary>
         /// Ответ 1
         /// </summary>
         public string Answer1;
+        
         /// <summary>
         /// Ответ 2
         /// </summary>
         public string Answer2;
+        
         /// <summary>
         /// Ответ 3
         /// </summary>
         public string Answer3;
+        
         /// <summary>
         /// Ответ 4
         /// </summary>
         public string Answer4;
+        
         /// <summary>
         /// Список тэгов верных ответов
         /// </summary>
